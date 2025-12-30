@@ -10,7 +10,13 @@ from utils.timer import run_and_time
 
 def main() -> None:
     random.seed(0)
-    dataset = generate_records(50_000, invalid_ratio=0.1)
+    dataset = generate_records(50_000, invalid_ratio=0.0)
+    dataset.extend(
+        [
+            {"id": -1, "category": "alpha", "value": 0.0},
+            {"id": -2, "category": "beta", "value": 0.0},
+        ]
+    )
 
     buggy_result, buggy_elapsed = run_and_time(buggy.aggregate_by_category, dataset.copy())
     fixed_result, fixed_elapsed = run_and_time(fixed.aggregate_by_category, dataset.copy())
